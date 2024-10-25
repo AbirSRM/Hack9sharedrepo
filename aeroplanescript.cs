@@ -7,8 +7,9 @@ public class aeroplanescript : MonoBehaviour
     public Rigidbody2D myRigidbody;
     public float flapStrength;
     public logicscript logic;
-    public bool birdIsAlive = true;
-    private bool isStuck = false;
+
+    public bool birdIsAlive = true; // Indicates if the airplane is alive
+    private bool isStuck = false; // Indicates if the airplane is stuck
 
     void Start()
     {
@@ -22,20 +23,32 @@ public class aeroplanescript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                myRigidbody.velocity = Vector2.up * flapStrength;
+                myRigidbody.velocity = Vector2.up * flapStrength; // Flap action
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // For boundary collisions
     {
-        if (collision.gameObject.CompareTag("Bird"))
+        if (collision.CompareTag("Boundary")) // Check for boundary collision
         {
-            logic.GameOver(); // Call GameOver method
-            birdIsAlive = false;
-            isStuck = true;
-            myRigidbody.isKinematic = true;
-            transform.SetParent(collision.transform);
+            logic.GameOver(); // Call GameOver method from logic script
+            birdIsAlive = false; // Set alive status to false
+            isStuck = true; // Set stuck to true
+            myRigidbody.isKinematic = true; // Stop physics movement
+            transform.SetParent(collision.transform); // Stick to the boundary
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) // For bird collisions
+    {
+        if (collision.gameObject.CompareTag("Bird")) // Collision with bird
+        {
+            logic.GameOver(); // Call GameOver method from logic script
+            birdIsAlive = false; // Set alive status to false
+            isStuck = true; // Set stuck to true
+            myRigidbody.isKinematic = true; // Stop physics movement
+            transform.SetParent(collision.transform); // Stick to the bird
         }
     }
 }
