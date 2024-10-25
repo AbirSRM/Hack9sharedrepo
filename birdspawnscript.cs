@@ -7,7 +7,7 @@ public class Pipespawnscript : MonoBehaviour
    public GameObject birdstacle;
     public float spawnRate = 2;
     private float timer = 0;
-    public float heightOffset = 10;
+    public float heightOffset = 15;
     // Start is called before the first frame update
     void Start()
     {

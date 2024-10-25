@@ -10,6 +10,10 @@ public class logicscript : MonoBehaviour
   public GameObject gameOverScreen;
 
   [ContextMenu("Increase Score")] 
+
+  public void Update(){
+    LoadNextLevel();
+  }
   public void addScore(int scoreToAdd)
   {
     playerScore = playerScore + scoreToAdd;
@@ -22,7 +26,14 @@ public class logicscript : MonoBehaviour
   
   public void GameOver()
 {
-    gameOverScreen.SetActive(true); // This should activate your game over panel
-    Time.timeScale = 0; // Optionally pause the game
+    gameOverScreen.SetActive(true);
+    Time.timeScale = 0; 
 }
+
+private void LoadNextLevel()
+    {
+        if(playerScore>=100){
+            SceneManager.LoadScene("NextLevel");
+        }
+    }
 }
